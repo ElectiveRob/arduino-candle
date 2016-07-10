@@ -22,12 +22,17 @@ private:
   unsigned long _prevTime;
   int _delay;
   int _r, _g, _b;
-  
+  int _counter;
+
   void applyEffect();
 
   void applyCrackling();
 
+  void applyRainbow();
+
   bool delayPassed();
+
+  void wheel(byte pos);
 };
 
 #endif

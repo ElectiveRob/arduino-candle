@@ -10,6 +10,7 @@ Candle::Candle(Adafruit_NeoPixel& pixels)
   _pixels = &pixels;
   _delay = 0;
   _prevTime = 0;
+  _counter = 0;
 }
 
 void Candle::setRGB(int r, int g, int b)
@@ -21,6 +22,7 @@ void Candle::setRGB(int r, int g, int b)
 
 void Candle::update()
 {
+  if(!this->delayPassed()) return;
   _r = r;
   _g = g;
   _b = b;
@@ -32,8 +34,6 @@ void Candle::update()
     _r = _g = _b = 0;
   }
 
-  if(!this->delayPassed()) return;
-
   // print color for debug
   /*Serial.println("Update color");
   Serial.print("R: ");
@@ -43,6 +43,7 @@ void Candle::update()
   Serial.print("B: ");
   Serial.print(_b);
   Serial.println("");*/
+
 
   _pixels->setPixelColor(0, _pixels->Color(_r,_g,_b));
   _pixels->show();
@@ -63,6 +64,9 @@ void Candle::applyEffect(){
     case 1:
       this->applyCrackling();
     break;
+    case 2:
+      this->applyRainbow();
+    break;
     default:
       break;
   }
@@ -79,4 +83,35 @@ void Candle::applyCrackling(){
     _b = Color::darker(_b,alpha);
   }
   _delay = random(50) + 150;
+}
+
+void Candle::applyRainbow()
+{
+  _delay = 50;
+  this->wheel(_counter & 255);
+  _counter++;
+  if(_counter > 256)
+    _counter = 0;
+}
+
+// Input a value 0 to 255 to get a color value.
+// The colours are a transition r - g - b - back to r.
+// From Adafruit sample
+void Candle::wheel(byte WheelPos) {
+  WheelPos = 255 - WheelPos;
+  if(WheelPos < 85) {
+    _r = 255 - WheelPos * 3;
+    _g = 0;
+    _b = WheelPos * 3;
+  }else if(WheelPos < 170) {
+    WheelPos -= 85;
+    _r = 0;
+    _g = WheelPos * 3;
+    _b = 255 - WheelPos * 3;
+  }else {
+    WheelPos -= 170;
+    _r = WheelPos * 3;
+    _g = 255 - WheelPos * 3;
+    _b = 0;
+  }
 }
