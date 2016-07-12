@@ -67,6 +67,9 @@ void Candle::applyEffect(){
     case 2:
       this->applyRainbow();
     break;
+    case 3:
+      this->applyFade();
+    break;
     default:
       break;
   }
@@ -87,11 +90,30 @@ void Candle::applyCrackling(){
 
 void Candle::applyRainbow()
 {
+  if(_counter > 256)
+    _counter = 0;
   _delay = 50;
   this->wheel(_counter & 255);
   _counter++;
-  if(_counter > 256)
+}
+
+void Candle::applyFade()
+{
+  if(_counter > 200)
     _counter = 0;
+
+  _delay = 50;
+
+  int alpha = _counter;
+  // revert fade
+  if(_counter > 100)
+    alpha = 200 - alpha;
+
+  _r = Color::darker(_r,alpha);
+  _g = Color::darker(_g,alpha);
+  _b = Color::darker(_b,alpha);
+
+  _counter++;
 }
 
 // Input a value 0 to 255 to get a color value.

@@ -30,6 +30,8 @@ private:
 
   void applyRainbow();
 
+  void applyFade();
+
   bool delayPassed();
 
   void wheel(byte pos);
