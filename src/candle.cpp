@@ -33,18 +33,7 @@ void Candle::update()
   }else{
     _r = _g = _b = 0;
   }
-
-  // print color for debug
-  /*Serial.println("Update color");
-  Serial.print("R: ");
-  Serial.print(_r);
-  Serial.print("G: ");
-  Serial.print(_g);
-  Serial.print("B: ");
-  Serial.print(_b);
-  Serial.println("");*/
-
-
+  
   _pixels->setPixelColor(0, _pixels->Color(_r,_g,_b));
   _pixels->show();
   unsigned long currentTime = millis();
