@@ -10,6 +10,13 @@ class Candle
 public:
   bool on;
   int effect;
+
+  // speed of the current effect
+  // 1= default speed
+  // 2= two times faster
+  // ...
+  // Not all effects require or make use of the speed
+  int speed;
   int r, g, b;
   Candle(Adafruit_NeoPixel& pixels);
 
@@ -35,6 +42,8 @@ private:
   bool delayPassed();
 
   void wheel(byte pos);
+
+  float getSpeedFactor();
 };
 
 #endif

@@ -7,6 +7,7 @@ Candle::Candle(Adafruit_NeoPixel& pixels)
 {
   on = true;
   effect = 0;
+  speed = 1;
   _pixels = &pixels;
   _delay = 0;
   _prevTime = 0;
@@ -33,7 +34,7 @@ void Candle::update()
   }else{
     _r = _g = _b = 0;
   }
-  
+
   _pixels->setPixelColor(0, _pixels->Color(_r,_g,_b));
   _pixels->show();
   unsigned long currentTime = millis();
@@ -81,7 +82,7 @@ void Candle::applyRainbow()
 {
   if(_counter > 256)
     _counter = 0;
-  _delay = 50;
+  _delay = 100 * this->getSpeedFactor();
   this->wheel(_counter & 255);
   _counter++;
 }
@@ -91,7 +92,7 @@ void Candle::applyFade()
   if(_counter > 200)
     _counter = 0;
 
-  _delay = 50;
+  _delay = 100 * this->getSpeedFactor();
 
   int alpha = _counter;
   // revert fade
@@ -125,4 +126,9 @@ void Candle::wheel(byte WheelPos) {
     _g = 255 - WheelPos * 3;
     _b = 0;
   }
+}
+
+float Candle::getSpeedFactor()
+{
+  return 1.f / speed;
 }
