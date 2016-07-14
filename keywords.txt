@@ -1,5 +1,5 @@
 #######################################
-# Syntax Coloring Map For WiFiEsp
+# Syntax Coloring Map For ArduinoCandle
 #######################################
 
 #######################################
@@ -13,7 +13,6 @@ ArduinoCandle	KEYWORD3
 #######################################
 
 Candle KEYWORD1
-Color	 KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
@@ -21,7 +20,6 @@ Color	 KEYWORD1
 
 update	KEYWORD2
 setRGB	KEYWORD2
-equals  KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
